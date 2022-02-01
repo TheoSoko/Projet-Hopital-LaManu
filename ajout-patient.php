@@ -1,7 +1,7 @@
 <?php
 include 'controllers/ajout-patientCtrl.php';
 include 'parts/header.php';
-?>
+?> 
 
 
 

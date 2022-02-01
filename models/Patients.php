@@ -78,7 +78,7 @@ class Patients
         $queryStatement->bindValue(':id', $this->id, PDO::PARAM_INT);
         $queryStatement->execute();
         $patient = $queryStatement->fetch(PDO::FETCH_OBJ);
-        return $patient;
+        return $patient ;
     }
 
     //Modifie les information d'un patient.
