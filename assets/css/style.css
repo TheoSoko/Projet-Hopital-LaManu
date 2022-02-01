@@ -1,0 +1,115 @@
+body{
+    overflow-x: hidden;
+    background-color: rgba(210, 180, 140, 0.493);
+}
+.navigation{
+    height: 95px;
+    background-color:steelblue ;
+    margin-bottom: 48px;
+    color: white;
+}
+.navTitle{
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 8px;
+    max-width: 35em;
+}
+.navList{
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 10px;
+    font-size: 1.1em;
+    max-width: 11em;
+}
+
+.navigation li{
+    list-style-type: none;
+}
+.navigation a{
+    text-decoration: none;
+    color: white;
+}
+.mainTitle{
+    margin-bottom: 45px;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.blocForm{
+    background-color: rgba(76, 86, 92, 0.397);
+    border-radius: 6px;
+    width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 22px;
+}
+.formElement{
+    margin-bottom: 24px ;
+}
+label{
+    display: block;
+    margin-bottom: 10px;
+}
+input{
+    width: 190px;
+    border-radius: 6px;
+}
+input[type=submit]{
+    margin-top: 11px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+.btn{
+    background-color: rgb(77, 136, 185);
+}
+.errorMessage{
+    color: rgb(212, 27, 27);
+}
+
+/* Page liste patients*/
+.patientsList{
+    padding-top: 15px;
+    padding-bottom: 19px;
+    width: 400px;
+    border-radius: 8px;
+    background-color: steelblue;
+}
+.buttonAddPatient{
+    background-color: steelblue;
+    border: solid 2px darkorange ;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+}
+/* */
+
+/* Page infos patient */
+.patientInfos{
+    background-color:darkkhaki;
+    border: 2px solid steelblue ;
+    max-width: 12em;
+    font-size: 1.3em;
+    display: inline-block;
+    padding-top: 0.4em ;
+    border-radius: 18px;
+}
+/*  °____°  */
+
+
+
+
+footer{
+    background-color:steelblue ;
+    margin-top: 15%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    height: 45px;
+    width: 100%;
+}
+footer p{
+    background-color:steelblue ;
+    position: relative;
+    top: 3%;
+    left: 2%;
+}
+
