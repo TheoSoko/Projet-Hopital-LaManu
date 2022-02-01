@@ -15,7 +15,7 @@ $inputArray = [
     ['filter' => 'email', 'name' => 'mail', 'realName' => 'une adresse de couriel', 'placeholder' => '', 'label' => 'Adresse de courriel', 'type' => 'email'],
 ];
 //Quand l'utilisateur a appuyé sur le bouton
-if (isset($_POST['addPatient'])) {
+if (isset($_POST['addPatient']) || isset($_POST['updatePatient'])) {
     $errorList = [];
     $formVerif = new Form;
 
@@ -39,12 +39,21 @@ if (isset($_POST['addPatient'])) {
         $patient->setBirthdate(htmlspecialchars($valueArray['birthdate']));
         $patient->setPhone(htmlspecialchars($valueArray['phone']));
         $patient->setMail(htmlspecialchars($valueArray['mail']));
-        if (!$patient->checkPatientIfExists()) {
-            $patient->addPatient();
-            header('location: index.php');
-            exit;
-        }else{
-            $errorList['addPatient'] = 'Ce patient existe déjà';
+
+        //Si on veut ajouter un patient:
+        if (isset($_POST['addPatient'])) {
+            if (!$patient->checkPatientIfExists()) {
+                $patient->addPatient();
+                header('location: index.php');
+                exit;
+            }else{
+                $errorList['addPatient'] = 'Ce patient existe déjà';
+            }
+
+        //Si on veut modifier un patient:
+        } else if (isset($_POST['updatePatient'])){
+                $patient->id = (int)$_POST['id'];
+                $patient->patientUpdate() ? $successMessage =  'Le patient a bien été mis à jour' : '' ;
         }
     }
 }

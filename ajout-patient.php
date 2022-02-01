@@ -1,5 +1,5 @@
 <?php
-include 'controllers/ajout-patientCtrl.php';
+require 'controllers/ajout-patientCtrl.php';
 include 'parts/header.php';
 ?> 
 
@@ -24,6 +24,8 @@ include 'parts/header.php';
                             <label for="<?= $input['name']?>"> <?= $input['label']?> </label>
                             <input type="<?= $input['type']?>" name="<?= $input['name']?>" id="<? $input['name']?>" required>
                         </div>
+                        
+                        <!--messages d'erreurs ; !-->
                         <?php if (!empty($errorList[$input['name']])){?>
                                <p class="pt-2 errorMessage"><?= $errorList[$input['name']] ?></p>
                         <?php } ?> 

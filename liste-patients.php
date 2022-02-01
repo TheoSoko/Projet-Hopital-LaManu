@@ -19,10 +19,10 @@ require 'controllers/liste-patientsCtrl.php';
         <?php foreach ($patientsList as $patient){?>
             <form action="profil-Patient.php" method="GET">
                 <tr>
+                    <input type="hidden" name="patientIdInput" value="<?= $patient->id?>">
                     <td> <input type="submit" value="<?=$patient->lastname ?>" name="patientSelectSubmit"> </td>
                     <td><p><?= $patient->firstname;?></p></td>
                     <td><?= $patient->birthdate;?></td>
-                    <input type="hidden" name="patientIdInput" value="<?= $patient->id?>">
                 </tr>
             </form>
         <?php }?>

@@ -82,9 +82,15 @@ class Patients
     }
 
     //Modifie les information d'un patient.
-    public function patientUpdate($leTrucQuiChange, $laNouvelleValeure ): bool{
-        $query = 'UPDATE ' . $this->table . ' SET ' . $leTrucQuiChange . ' = ' . $laNouvelleValeure . ' WHERE `id` = :id';
+    public function patientUpdate(): bool{
+        $query = 'UPDATE ' . $this->table . ' SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone
+                                            , `mail` = :mail  WHERE `id` = :id';
         $queryStatement = $this->db->prepare($query);
+        $queryStatement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+        $queryStatement->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
+        $queryStatement->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
+        $queryStatement->bindValue(':phone', $this->phone, PDO::PARAM_STR);
+        $queryStatement->bindValue(':mail', $this->mail, PDO::PARAM_STR);
         $queryStatement->bindValue(':id', $this->id, PDO::PARAM_INT);
         return $queryStatement->execute();
     }
