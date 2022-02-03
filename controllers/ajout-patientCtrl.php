@@ -52,7 +52,7 @@ if (isset($_POST['addPatient']) || isset($_POST['updatePatient'])) {
 
         //Si on veut modifier un patient:
         } else if (isset($_POST['updatePatient'])){
-                $patient->id = (int)$_POST['id'];
+                $patient->setId((int)$_POST['id']);
                 $patient->patientUpdate() ? $successMessage =  'Le patient a bien été mis à jour' : '' ;
         }
     }

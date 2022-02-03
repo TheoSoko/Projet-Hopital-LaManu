@@ -26,4 +26,9 @@
           <li><a href="liste-patients.php">Liste Patients</a></li>
         </ul>
     </div>
+    <div class="col navList">
+        <ul>
+          <li><a href="ajout-rdv.php">Ajout rdv</a></li>
+        </ul>
+    </div>
 </div>

@@ -95,8 +95,17 @@ input[type=submit]{
 }
 /*  °____°  */
 
+/* Page modif patient */
+#patientUpdateForm{
+    margin-top: 7%;
+}
+/*  °____°  */
 
-
+/* Page */
+.labelForm{
+    display: inline;
+}
+/* */
 
 footer{
     background-color:steelblue ;

@@ -17,14 +17,12 @@ require 'controllers/liste-patientsCtrl.php';
         <th>Date de naissance</th>
     </thead>
         <?php foreach ($patientsList as $patient){?>
-            <form action="profil-Patient.php" method="GET">
-                <tr>
-                    <input type="hidden" name="patientIdInput" value="<?= $patient->id?>">
-                    <td> <input type="submit" value="<?=$patient->lastname ?>" name="patientSelectSubmit"> </td>
-                    <td><p><?= $patient->firstname;?></p></td>
-                    <td><?= $patient->birthdate;?></td>
-                </tr>
-            </form>
+            <tr>
+                <td><p><?= $patient->lastname;?></p></td>
+                <td><p><?= $patient->firstname;?></p></td>
+                <td><?= $patient->birthdateView;?></td>
+                <td> <a href="profil-Patient.php?patientId=<?=$patient->id?>"> Voir le patient </a> </td>
+            </tr>
         <?php }?>
     </form>
 

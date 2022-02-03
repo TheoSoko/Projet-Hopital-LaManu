@@ -3,49 +3,53 @@ include 'parts/header.php';
 include 'controllers/profil-patientCtrl.php';
 ?>
 
-
+<?php if ($isPatientFound) { ?>
     <div class="row text-center mainTitle mb-5">
         <div class="col">
             <H1 class="display-5">Profil du patient</H1>
         </div>
     </div>
+    
 
-    <form action="modifier-Patient.php" method="POST" class="text-end pb-3"> 
-        <input type="submit" value="Modifier ce patient" class="btn btn-primary py-3 me-5">
-        <input type="hidden" name="lastname" value="<?= $patient->lastname ?>">
-        <input type="hidden" name="firstname" value="<?= $patient->firstname ?>">
-        <input type="hidden" name="birthdate" value="<?= $patient->birthdate ?>">
-        <input type="hidden" name="phone" value="<?= $patient->phone ?>">
-        <input type="hidden" name="mail" value="<?= $patient->mail ?>">
-        <input type="hidden" name="id" value="<?= $id ?>">
-    </form>
+    <!-- Lien vers modification du patient avec paramètres!-->
+    <div class="text-end pb-2"> <a href="modifier-Patient.php?lastname=<?=$patient->getLastName()?>&firstname=<?=$patient->getFirstName()?>&birthdate=<?=$patient->getBirthDate()?>
+    &birthdateview=<?=$patient->getBirthDateView()?>&phone=<?=$patient->getPhone()?>&mail=<?=$patient->getMail()?>&id=<?=$patient->getId()?>" class="btn btn-primary py-3 me-5">Modifier ce patient</a> </div>
 
     <div class="row text-center d-flex justify-content-center mb-4">
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Nom</p>
-                <p><?= $patient->lastname ?></p>
+                <p><?= $patient->getLastName() ?></p>
             </div>
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Prénom</p>
-                <p><?= $patient->firstname ?></p>
+                <p><?= $patient->getFirstName() ?></p>
             </div>
     </div>
 
     <div class="row text-center d-flex justify-content-center">
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Date de naissance</p>
-                <p><?= $patient->birthdate ?></p>
+                <p><?= $patient->getBirthdateView() ?></p>
             </div>
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Téléphone</p>
-                <p><?= $patient->phone ?></p>
+                <p><?= $patient->getPhone() ?></p>
             </div>
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">email</p>
-                <p><?= $patient->mail ?></p>
+                <p><?= $patient->getMail() ?></p>
             </div>
     </div>
 
+<?php } else { ?>
+    <div class="row text-center mainTitle mb-5">
+        <div class="col">
+            <H1 class="display-5">Patient non trouvé</H1>
+                <p class="text-danger">Merci de contacter le service technique si le problème persiste</p>
+                <a href="liste-patients.php" class="btn btn-primary">Retour</a>
+        </div>
+    </div>
+<?php } ?>
 
 
 <?php include 'parts/footer.php'; ?>

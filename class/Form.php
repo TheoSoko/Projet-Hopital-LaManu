@@ -73,12 +73,8 @@ class Form
     {
         //2022-01-27
         $dateArray = explode('-', $this->inputValue);
-        if ($dateArray[0] < 1900){
-            $this->errorMessage = 'Merci de renseigner une année supérieure à 1900';
-            return false;
-        } else {
         return checkdate($dateArray[1], $dateArray[2], $dateArray[0]);
-        }
+        
     }
     /**
      * Méthode globale de vérification d'un champ. 

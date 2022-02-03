@@ -1,10 +1,11 @@
 <?php
 class Patients
 {
-    public int $id;
+    private int $id;
     private string $lastname;
     private string $firstname;
     private string $birthdate;
+    private string $birthdateView;
     private string $phone;
     private string $mail;
     private PDO $db;
@@ -61,25 +62,13 @@ class Patients
 
     //Récupère tous les patients existant dans la base de donnée.
     public function patientsList(): array{
-        $query = 'SELECT `id`, `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdate` FROM ' . $this->table;
+        $query = 'SELECT `id`, `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `birthdate` AS `birthdate` FROM ' . $this->table;
         $queryStatement = $this->db->query($query);
         $patientsList = $queryStatement->fetchAll(PDO::FETCH_OBJ);
         return $patientsList;
     }
 
 
-
-
-    //Récupère les informations d'un patient unique.
-    public function patientInfo(): object{
-        $query = 'SELECT `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdate`, `phone`, `mail` FROM ' . $this->table 
-            . ' WHERE `id` = :id ';
-        $queryStatement = $this->db->prepare($query);
-        $queryStatement->bindValue(':id', $this->id, PDO::PARAM_INT);
-        $queryStatement->execute();
-        $patient = $queryStatement->fetch(PDO::FETCH_OBJ);
-        return $patient ;
-    }
 
     //Modifie les information d'un patient.
     public function patientUpdate(): bool{
@@ -96,10 +85,48 @@ class Patients
     }
 
 
+    //Récupère les informations d'un patient unique.
+    public function getPatientInfo(): bool
+    {
+        $query = 'SELECT `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `birthdate` AS `birthdate`,
+                 `phone`, `mail` FROM ' . $this->table . ' WHERE id= :id';
+        $queryStatement = $this->db->prepare($query);
+        $queryStatement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $queryStatement->execute();
+        $result = $queryStatement->fetch(PDO::FETCH_OBJ);
+        //Si j'ai un résultat j'hydrate mon objet.
+        if(is_object($result)){
+            $this->lastname = $result->lastname;
+            $this->firstname = $result->firstname;
+            $this->birthdate = $result->birthdate;
+            $this->birthdateView = $result->birthdateView;
+            $this->phone = $result->phone;
+            $this->mail = $result->mail;
+            return true;
+        }
+        return false;
+    }
+
+    public function getSearchedPatients(){
+        $query = 'SELECT `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `id`' . $this->table . 
+                        'WHERE `lastname` LIKE :lastname';
+        $queryStatement = $this->db->prepare($query);
+        $queryStatement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+        $queryStatement->execute();
+        $SearchedPatientList = $queryStatement->fetchAll(PDO::FETCH_OBJ);
+        if (!empty($SearchedPatientList)){
+            return $SearchedPatientList; 
+        } else {
+            return false;
+        } 
+    }
 
 
 
 
+
+
+    //SETTERS
     public function setLastname(string $value): void
     {
         $this->lastname = strtoupper($value);
@@ -125,4 +152,32 @@ class Patients
     {
         $this->mail = $value;
     }
+
+    public function setId(int $value): void{
+        $this->id = $value;
+    }
+
+    //GETTERS
+    public function getId():int{
+        return $this->id;
+    }
+    public function getLastName():string{
+        return $this->lastname;
+    }
+    public function getFirstName():string{
+        return $this->firstname;
+    }
+    public function getBirthDate():string{
+        return $this->birthdate;
+    }
+    public function getBirthDateView():string{
+        return $this->birthdateView;
+    }
+    public function getPhone():string{
+        return $this->phone;
+    }
+    public function getMail():string{
+        return $this->mail;
+    }
+
 }
