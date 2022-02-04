@@ -29,13 +29,6 @@ public function addAppointments() {
 }
 
 
-
-
-
-
-
-
-
 }
 
 

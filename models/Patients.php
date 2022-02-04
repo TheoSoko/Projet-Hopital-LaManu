@@ -10,6 +10,7 @@ class Patients
     private string $mail;
     private PDO $db;
     private string $table = '`patients`';
+    private string $lastnameSearch;
 
     public function __construct()
     {
@@ -108,10 +109,10 @@ class Patients
     }
 
     public function getSearchedPatients(){
-        $query = 'SELECT `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `id`' . $this->table . 
-                        'WHERE `lastname` LIKE :lastname';
+        $query = 'SELECT `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `id` FROM ' . $this->table . 
+                        ' WHERE `lastname` LIKE :lastname';
         $queryStatement = $this->db->prepare($query);
-        $queryStatement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+        $queryStatement->bindValue(':lastname', '%'.$this->lastnameSearch.'%', PDO::PARAM_STR);
         $queryStatement->execute();
         $SearchedPatientList = $queryStatement->fetchAll(PDO::FETCH_OBJ);
         if (!empty($SearchedPatientList)){
@@ -156,6 +157,11 @@ class Patients
     public function setId(int $value): void{
         $this->id = $value;
     }
+    public function setLastnameSearch($value): void{
+        $this->lastnameSearch = $value;
+    }
+
+
 
     //GETTERS
     public function getId():int{

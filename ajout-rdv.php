@@ -2,7 +2,7 @@
 include 'parts/header.php';
 //require 'controllers/liste-patientsCtrl.php';
 require 'controllers/patient-rdvCtrl.php'
-?> 
+?>
 
 <form action="" method="GET" class="ms-3">
     <p class="fs-4 mb-4"> Veuillez sélectionner le patient : </p>
@@ -16,6 +16,8 @@ require 'controllers/patient-rdvCtrl.php'
 <?php if (isset($_GET['patientRdv']) && isset($SearchedPatientList)){ 
             foreach ($SearchedPatientList as $patient){ ?>
             <p><?=$patient->lastname;?></p>
+            <p><?=$patient->firstname;?></p>
+            <p><?=$patient->birthdateView;?></p>
             <?php } ?>
 <?php }else if (isset($errorMessage)){?>
             <p><?= $errorMessage ?></p>
