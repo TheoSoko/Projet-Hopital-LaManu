@@ -101,9 +101,16 @@ input[type=submit]{
 }
 /*  °____°  */
 
-/* Page */
+/* Page rdv */
 .labelForm{
     display: inline;
+}
+#rdvSubmit{
+    margin-left: 4%;
+    margin-top: 1%;
+}
+.cardPatientLone{
+    width: 22rem;
 }
 /* */
 
