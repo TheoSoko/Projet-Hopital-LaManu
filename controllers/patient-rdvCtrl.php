@@ -13,9 +13,13 @@ if (isset($_GET['patientSearch']) && !empty('searchPatientLastName')){
     } else{
         $errorMessage = 'Désolé, aucun patient de correspond à votre recherche';
     }
+
 }
 
-
+//Si le patient a été selectionné
+if (isset($_POST['patientSelect'])){
+    $wrongDatehour = false;
+}
 
 //Si le rdv a été confirmé (troisième formulaire)
 if (isset($_POST['setAppointment'])){

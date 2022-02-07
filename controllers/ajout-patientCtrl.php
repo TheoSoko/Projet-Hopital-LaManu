@@ -28,8 +28,12 @@ if (isset($_POST['addPatient']) || isset($_POST['updatePatient'])) {
         }
     }
 
-    var_dump($errorList);
-    var_dump($valueArray);
+//Pour les placeholders si une des valeurs n'est pas bonne.
+    $placeHolderArray = [];
+    foreach ($inputArray as $input){
+        $placeHolderArray[$input['name']] = $_POST[$input['name']];
+    }
+
 
 
     if (count($errorList) == 0) {
@@ -44,8 +48,6 @@ if (isset($_POST['addPatient']) || isset($_POST['updatePatient'])) {
         if (isset($_POST['addPatient'])) {
             if (!$patient->checkPatientIfExists()) {
                 $patient->addPatient();
-                header('location: index.php');
-                exit;
             }else{
                 $errorList['addPatient'] = 'Ce patient existe déjà';
             }

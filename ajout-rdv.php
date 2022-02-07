@@ -45,13 +45,13 @@ require 'controllers/patient-rdvCtrl.php'
 <?php if (isset($_POST['patientSelect']) || !empty($wrongDatehour)){ ?>
         <form action="" method="POST" class="text-center">
             <label for="dateTimeAppointment" class="h3 mb-5">Veuillez entrer une une date et une heure pour le rdv : </label>
-            <input type="datetime-local" name="dateTimeAppointment">
+            <input type="datetime-local" name="dateTimeAppointment" required>
             <input type="hidden" value="<?=$_POST['idInput']?>" name="idInput">
             <input type="hidden" value="<?=$_POST['lastNameInput']?>" name="lastNameInput">
             <input type="hidden" value="<?=$_POST['firstNameInput']?>" name="firstNameInput">
             <input type="hidden" value="<?=$_POST['birthdateInput']?>" name="birthdateInput">
             <div class="mt-2">
-                <p class="fw-bold "> <?= empty($wrongDatehour) ?: $resultMessage ?> </p> <!--Résultat si le créneau est déjà pris -->  
+                <p class="fw-bold text-danger mt-3"> <?= !empty($wrongDatehour) ? $resultMessage : ''?> </p> <!--Résultat si le créneau est déjà pris -->  
                 <input type="submit" value="Confirmer le rdv" name="setAppointment">
             </div>
         </form>
@@ -67,8 +67,10 @@ require 'controllers/patient-rdvCtrl.php'
 <?php } ?>
 
 <!--résultat -->
-<?php if (empty($wrongDatehour)){ ?>
-    <p class="fw-bold"><?= $resultMessage ?></p>
+<?php if (isset($_POST['setAppointment']) && empty($wrongDatehour)){ ?>
+    <div class="text-center">
+        <p class="fw-bold text-success fs-4 mt-4"><?= $resultMessage ?></p>
+    </div>
 <?php } ?>
 
 

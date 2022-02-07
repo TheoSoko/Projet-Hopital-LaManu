@@ -4,41 +4,51 @@ include 'parts/header.php';
 ?> 
 
 
-
-
-<div class="container">
-
-    <div class="row text-center mainTitle">
-        <div class="col">
-            <H1 class="display-5">Ajout d'un nouveau patient</H1>
+<?php if (!isset($_POST['addPatient']) || !empty($errorList['addPatient'])) { ?>
+    <div class="container">
+        <div class="row text-center mainTitle">
+            <div class="col">
+                <H1 class="display-5">Ajout d'un nouveau patient</H1>
+            </div>
         </div>
-    </div>
 
-    <div class="row text-center blocForm">
-        <div class="col">
-            <form method="POST">
+        <!-- Message patient déjà existant--> 
+        <div class="text-center mb-4"> <p class="text-danger fw-bold fs-4"><?= !empty($errorList['addPatient']) ? $errorList['addPatient'] : '' ?></p> </div>             
 
-                <?php foreach ($inputArray as $input){?>
-                    <div class="row formElement">
-                        <div class="col">
-                            <label for="<?= $input['name']?>"> <?= $input['label']?> </label>
-                            <input type="<?= $input['type']?>" name="<?= $input['name']?>" id="<? $input['name']?>" required>
+        <div class="row text-center blocForm">
+            <div class="col">
+                <form method="POST">
+                    <?php foreach ($inputArray as $input){?>
+                        <div class="row formElement">
+                            <div class="col">
+                                <label for="<?= $input['name']?>"> <?= $input['label']?> </label>
+                                <input type="<?= $input['type']?>" name="<?= $input['name']?>" id="<? $input['name']?>" value="<?= isset($placeHolderArray[$input['name']]) ? $placeHolderArray[$input['name']] : '' ?>" required>
+                            </div>
+
+                            <!--messages d'erreurs ; !-->
+                            <?php if (!empty($errorList[$input['name']])){?>
+                                <p class="pt-2 errorMessage"><?= $errorList[$input['name']] ?></p>
+                            <?php } ?> 
                         </div>
-                        
-                        <!--messages d'erreurs ; !-->
-                        <?php if (!empty($errorList[$input['name']])){?>
-                               <p class="pt-2 errorMessage"><?= $errorList[$input['name']] ?></p>
-                        <?php } ?> 
-                    </div>
-                <?php } ?>
-                <input type="submit" value="Ajout du patient" name="addPatient" class="btn btn-primary">
-            </form>
+                    <?php } ?>
+                    <input type="submit" value="Ajout du patient" name="addPatient" class="btn btn-primary">
+                </form>
+            </div>
         </div>
     </div>
-</div>
+<?php } ?>
 
 
-                
+<?php if (isset($_POST['addPatient']) && empty($errorList['addPatient'])) { ?>
+        <div class="text-center">
+            <p class="text-success fw-bold fs-3">Le patient a bien été ajouté.</p>
+        </div>
+<?php }  ?>  
+    
+
+
+
+
 
 
 
