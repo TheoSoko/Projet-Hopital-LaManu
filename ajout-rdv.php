@@ -5,7 +5,7 @@ require 'controllers/patient-rdvCtrl.php'
 ?>
 
 <!-- Premier formulaire: s'affiche tant que le patient n'est pas sélectionné -->
-<?php if (!isset($_POST['patientSelect'])) { ?>
+<?php if (!isset($_POST['patientSelect']) && !isset($_POST['setAppointment'])) { ?>
     <form action="" method="GET" class="ms-3 mb-5">
         <p class="fs-4 mb-4"> Veuillez sélectionner le patient : </p>
         <div>
@@ -17,7 +17,7 @@ require 'controllers/patient-rdvCtrl.php'
 <?php } ?>
 
 <!-- Deuxième formulaire: s'affiche si la recherche a été effectuée -->
-<?php if (isset($_GET['patientSearch']) && isset($SearchedPatientList) && !isset($_POST['patientSelect'])){  ?>
+<?php if (isset($_GET['patientSearch']) && isset($SearchedPatientList) && !isset($_POST['patientSelect']) && !isset($_POST['setAppointment'])){  ?>
         <div class="row">
           <?php foreach ($SearchedPatientList as $patient){ ?>
                 <form action="" method="POST" class="col">
@@ -41,16 +41,20 @@ require 'controllers/patient-rdvCtrl.php'
 <?php } ?>
 
 <!-- Troisème formulaire: s'affiche si le patient a été sélectionné -->
-<?php if (isset($_POST['patientSelect'])){ ?>
+
+<?php if (isset($_POST['patientSelect']) || !empty($wrongDatehour)){ ?>
         <form action="" method="POST" class="text-center">
             <label for="dateTimeAppointment" class="h3 mb-5">Veuillez entrer une une date et une heure pour le rdv : </label>
             <input type="datetime-local" name="dateTimeAppointment">
             <input type="hidden" value="<?=$_POST['idInput']?>" name="idInput">
+            <input type="hidden" value="<?=$_POST['lastNameInput']?>" name="lastNameInput">
+            <input type="hidden" value="<?=$_POST['firstNameInput']?>" name="firstNameInput">
+            <input type="hidden" value="<?=$_POST['birthdateInput']?>" name="birthdateInput">
             <div class="mt-2">
+                <p class="fw-bold "> <?= empty($wrongDatehour) ?: $resultMessage ?> </p> <!--Résultat si le créneau est déjà pris -->  
                 <input type="submit" value="Confirmer le rdv" name="setAppointment">
             </div>
         </form>
-
     <div class="d-flex justify-content-center mt-4">
         <div class="card cardPatientLone pt-1 pb-2">
             <div class="card-body">
@@ -62,7 +66,10 @@ require 'controllers/patient-rdvCtrl.php'
     </div>
 <?php } ?>
 
-<?php if (isset($_POST['setAppointment'])){ ?>
-    <p><?= $result ?></p>
+<!--résultat -->
+<?php if (empty($wrongDatehour)){ ?>
+    <p class="fw-bold"><?= $resultMessage ?></p>
 <?php } ?>
+
+
 <?php include 'parts/footer.php' ?> 
