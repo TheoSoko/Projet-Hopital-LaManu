@@ -31,7 +31,7 @@ include 'parts/header.php';
                             <?php } ?> 
                         </div>
                     <?php } ?>
-                    <input type="submit" value="Ajout du patient" name="addPatient" class="btn btn-primary">
+                    <input type="submit" value="Ajout du patient" name="addPatient" class="btn btn-myColor">
                 </form>
             </div>
         </div>
@@ -41,7 +41,7 @@ include 'parts/header.php';
 
 <?php if (isset($_POST['addPatient']) && empty($errorList['addPatient'])) { ?>
         <div class="text-center">
-            <p class="text-success fw-bold fs-3">Le patient a bien été ajouté.</p>
+            <p class="text-myColor fw-bold fs-3 mt-5">Le patient a bien été ajouté.</p>
         </div>
 <?php }  ?>  
     

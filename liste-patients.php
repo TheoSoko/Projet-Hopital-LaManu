@@ -9,8 +9,8 @@ require 'controllers/liste-patientsCtrl.php';
     </div>
 </div>
 
-<div class="text-end"><a href="ajout-patient.php" class="me-4 buttonAddPatient py-3 px-3 fw-bold">Ajouter un patient</a></div>
-<table class="table table-stripped">
+<div class="text-end"><a href="ajout-patient.php" class="me-4 buttonAddPatient btn-myColor py-3 px-3 fw-bold">Ajouter un patient</a></div>
+<table class="table table-stripped mx-3 mt-4">
     <thead>
         <th>Nom</th>
         <th>Prénom</th>
@@ -21,7 +21,7 @@ require 'controllers/liste-patientsCtrl.php';
                 <td><p><?= $patient->lastname;?></p></td>
                 <td><p><?= $patient->firstname;?></p></td>
                 <td><?= $patient->birthdateView;?></td>
-                <td> <a href="profil-Patient.php?patientId=<?=$patient->id?>"> Voir le patient </a> </td>
+                <td> <a href="profil-Patient.php?patientId=<?=$patient->id?>" class="text-decoration-none fw-bold btn btn-myColor px-4"> Voir le patient </a> </td>
             </tr>
         <?php }?>
     </form>

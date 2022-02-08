@@ -4,14 +4,16 @@ require 'controllers/ajout-patientCtrl.php';
 ?>
 
 
-<div class="row text-center mainTitle mb-5">
+<div class="row text-center mainTitle">
     <div class="col">
         <H1 class="display-5">Modification du patient</H1>
     </div>
 </div>
-<form action="" method="POST" id="patientUpdateForm">
-    <div class="row text-center d-flex justify-content-center mb-4">
 
+<form action="" method="POST" class="mt-3" id="patientUpdateForm">
+    <span class="d-flex justify-content-start me-4 mb-3"><input type="submit" value="Valider les modifications" class="btn btn-myColor py-4 px-4 ms-5 fw-bold fs-5 w-auto" name="updatePatient"></span>
+    
+    <div class="row text-center d-flex justify-content-center mb-4">
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Nom</p>
                 <input type="text" name="lastname" id="lastname" value="<?= $_GET['lastname'] ?>" class="mb-3">
@@ -30,7 +32,6 @@ require 'controllers/ajout-patientCtrl.php';
     </div>
 
     <div class="row text-center d-flex justify-content-center">
-
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Date de naissance</p>
                 <input type="date" name="birthdate" value="<?= str_replace(' ', '', $_GET['birthdate'])?>" class= "mb-3"/>
@@ -58,13 +59,10 @@ require 'controllers/ajout-patientCtrl.php';
             <!-- Input hidden pour passer l'id-->
             <input type="hidden" name="id" value=" <?= $_GET['id'] ?> ">
     </div> 
-
-    <input type="submit" value="Valider les modifications" name="updatePatient">
-
 </form>
+
 <p class="successMessage"><?= !empty($successMessage) ? $successMessage : '' ?></p>
-<?php var_dump($_GET['birthdate']) ?>
-<?php var_dump($_GET['birthdateview']) ?>
+
 
 <script src="assets/hospital.js"></script>
 <?php include 'parts/footer.php'; ?>

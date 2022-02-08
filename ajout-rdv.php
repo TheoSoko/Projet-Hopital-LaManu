@@ -12,16 +12,16 @@ require 'controllers/patient-rdvCtrl.php'
             <label for="searchPatientLastName" class="labelForm me-3"> Nom : </label>
             <input type="search" name="searchPatientLastName" id="searchPatientLastName">
         </div>
-        <input type="submit" name="patientSearch" value="chercher patient" id="rdvSubmit">
+        <input type="submit" value="chercher patient" id="rdvSubmit" class="btn btn-myColor py-1 shadow" name="patientSearch">
     </form>
 <?php } ?>
 
 <!-- Deuxième formulaire: s'affiche si la recherche a été effectuée -->
 <?php if (isset($_GET['patientSearch']) && isset($SearchedPatientList) && !isset($_POST['patientSelect']) && !isset($_POST['setAppointment'])){  ?>
-        <div class="row">
+        <div class="row mx-1">
           <?php foreach ($SearchedPatientList as $patient){ ?>
-                <form action="" method="POST" class="col">
-                    <div class="card">
+                <form action="" method="POST" class="col-3 mb-4">
+                    <div class="card shadow">
                         <div class="card-body">
                             <p class="card-text"><?=$patient->lastname?></p>
                             <p class="card-text"><?=$patient->firstname?></p>
@@ -30,7 +30,7 @@ require 'controllers/patient-rdvCtrl.php'
                             <input type="hidden" value="<?=$patient->lastname?>" name="lastNameInput">
                             <input type="hidden" value="<?=$patient->firstname?>" name="firstNameInput">
                             <input type="hidden" value="<?=$patient->birthdateView?>" name="birthdateInput">
-                            <input type="submit" value="Sélectionner ce patient" class="btn btn-primary" name="patientSelect">
+                            <input type="submit" value="Sélectionner ce patient" class="btn btn-myColor shadow-sm" name="patientSelect">
                         </div>
                     </div>
                 </form>
@@ -52,11 +52,11 @@ require 'controllers/patient-rdvCtrl.php'
             <input type="hidden" value="<?=$_POST['birthdateInput']?>" name="birthdateInput">
             <div class="mt-2">
                 <p class="fw-bold text-danger mt-3"> <?= !empty($wrongDatehour) ? $resultMessage : ''?> </p> <!--Résultat si le créneau est déjà pris -->  
-                <input type="submit" value="Confirmer le rdv" name="setAppointment">
+                <input type="submit" value="Confirmer le rdv" class="btn btn-myColor py-1 shadow" name="setAppointment">
             </div>
         </form>
     <div class="d-flex justify-content-center mt-4">
-        <div class="card cardPatientLone pt-1 pb-2">
+        <div class="card cardPatientLone pt-1 pb-2 shadow-sm">
             <div class="card-body">
                 <p class="card-text"><?=$_POST['lastNameInput']?></p>
                 <p class="card-text"><?=$_POST['firstNameInput']?></p>
@@ -69,7 +69,7 @@ require 'controllers/patient-rdvCtrl.php'
 <!--résultat -->
 <?php if (isset($_POST['setAppointment']) && empty($wrongDatehour)){ ?>
     <div class="text-center">
-        <p class="fw-bold text-success fs-4 mt-4"><?= $resultMessage ?></p>
+        <p class="fw-bold fs-3 mt-5 text-myColor"><?= $resultMessage ?></p>
     </div>
 <?php } ?>
 
