@@ -29,16 +29,17 @@ if (isset($_POST['setAppointment'])){
     $appointments->setIdPatients($id);
     $appointments->setDateHour($dateTimeAppointment);
     if ($appointments->checkIfAppointmentExists()){ 
-        $wrongDatehour = 1;
+        $wrongDatehour = true;
         $resultMessage = 'Désolé, le créneau horaire est déjà utilisé pour un autre rdv.';
     } else {
-        $wrongDatehour = 0;
+        $wrongDatehour = false;
         $resultMessage = $appointments->addAppointments() ? 'Merci à vous, le rdv a bien été enregistré!' : 'Désolé, une erreur est survenue, vous pouvez contacter le service technique.';
     }
 }
 
 
 
-/* SELECT `dateHour`, `firstname`, `birthdate` FROM 
+/* SELECT `dateHour`, `firstname`, `lastname`, `birthdate` FROM 
 `appointments`
-JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`; */
+JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`
+ORDER BY `dateHour` ASC; */

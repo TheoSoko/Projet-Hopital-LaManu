@@ -6,5 +6,3 @@ if (isset($_GET['patientId'])) {
     $patient->setId(htmlspecialchars($_GET['patientId']));
     $isPatientFound = $patient->getPatientInfo();
 }
-
-

@@ -1,7 +1,7 @@
 <?php 
 include 'parts/header.php';
 //require 'controllers/liste-patientsCtrl.php';
-require 'controllers/patient-rdvCtrl.php'
+require 'controllers/rdvCtrl.php'
 ?>
 
 <!-- Premier formulaire: s'affiche tant que le patient n'est pas sélectionné -->
@@ -20,7 +20,7 @@ require 'controllers/patient-rdvCtrl.php'
 <?php if (isset($_GET['patientSearch']) && isset($SearchedPatientList) && !isset($_POST['patientSelect']) && !isset($_POST['setAppointment'])){  ?>
         <div class="row mx-1">
           <?php foreach ($SearchedPatientList as $patient){ ?>
-                <form action="" method="POST" class="col-3 mb-4">
+                <form action="" method="POST" class="col-12 col-md-3 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
                             <p class="card-text"><?=$patient->lastname?></p>

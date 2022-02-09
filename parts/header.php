@@ -31,4 +31,9 @@
           <li><a href="ajout-rdv.php">Ajout rdv</a></li>
         </ul>
     </div>
+    <div class="col navList">
+        <ul>
+          <li><a href="liste-rdv.php">Liste rdv</a></li>
+        </ul>
+    </div>
 </div>

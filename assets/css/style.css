@@ -73,6 +73,9 @@ input[type=submit]{
 .text-myColor{
     color: rgba(0, 128, 85, 0.979);
 }
+table{
+    background-color: rgba(184, 157, 126, 0.493);
+}
 /* Page liste patients*/
 .patientsList{
     padding-top: 15px;
@@ -117,9 +120,21 @@ input[type=submit]{
     margin-top: 1%;
 }
 .cardPatientLone{
-    width: 22rem;
+    width: 80%;
 }
 /* */
+
+/* Page infos RDV */
+.cardInfosRdv{
+    font-size: 1.1em
+}
+.infoInput{
+    display: none;
+}
+#confirmAppointmentDiv{
+    display: none;
+}
+/*     '____'      */
 
 footer{
     background-color:teal ;
@@ -136,3 +151,13 @@ footer p{
     left: 2%;
 }
 
+/* MEDIA QUERY GRAND ECRAN */
+@media (min-width: 950px){
+
+    .cardInfosRdv{
+        width: 40%;
+    }
+    .cardPatientLone{
+        width: 22rem;
+    }
+}

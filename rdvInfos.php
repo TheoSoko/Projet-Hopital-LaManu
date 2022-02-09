@@ -1,0 +1,74 @@
+<?php 
+include 'parts/header.php';
+include 'controllers/rdvInfosCtrl.php';
+?>
+
+<!-- BOUTON MODIFICATION -->
+<div class="d-flex justify-content-end me-5 mb-3"><span class="btn btn-myColor py-3 px-4 me-5 mt-3 fw-bold fs-5" id="modifAppointment">Modifier ce rdv</span></div>
+<!-- BOUTON CONFIRMATION -->
+<div class="justify-content-start ms-5 mb-3" id="confirmAppointmentDiv"><span class="btn btn-myColor py-3 px-4 me-5 mt-3 fw-bold fs-5">Confirmer le rdv</span></div>
+
+<div class="container">
+    <div class="d-flex justify-content-center">
+
+        <div class="card shadow mt-3 cardInfosRdv">
+            <div class="card-header"> <h1 class="card-title h2 pt-2 infoText"> Rendez-vous </h1> <h1 class="card-title h2 pt-2 infoInput"> Modification du rendez-vous </h1></div>
+            <div class="card-body ps-4 pt-3">
+
+                <!-- LES CLASSES "infoText" DISPARAISSENT AU CLIC DU BOUTON "Modifier", LES CLASSES "infoInput" APPARRAISSENT ALORS. -->
+                <form action="" method="POST">
+                    <p class="infoText pt-2"> 
+                        <span class="fw-bold infoText"> Date : </span> <span class="infoText"><?= $appointmentinfos->dateHourView['0'] ?></span>
+                    </p>
+                    <p> 
+                        <span class="fw-bold infoText"> Heure : </span> <span class="infoText"><?= $appointmentinfos->dateHourView['1'] ?></span>
+                    </p>
+                    <p>
+                        <label for="dateHour" class="fw-bold me-2 infoInput">Date et heure : </label> <input type="datetime-local" name="dateHour" class="infoInput">
+                    </p>
+                    <p> 
+                        <span class="fw-bold infoText"> Patient : </span> <span class="infoText"><?= $appointmentinfos->name ?></span>
+                    </p>
+                    <p>
+                        <label for="lastName" class="fw-bold me-2 infoInput"> Nom de famille : </label> <input type="text" class="infoInput"  name="lastName">
+                    </p>
+                    <p>
+                        <label for="firstName" class="fw-bold me-2 infoInput"> Prénom : </label> <input type="text" class="infoInput"  name="firstName">
+                    </p>
+                    <p> 
+                        <span class="fw-bold infoText"> Né(e) le : </span> <span class="infoText"><?= $appointmentinfos->birthdateView ?></span>
+                        <label for="birthdate" class="fw-bold me-2 infoInput">Date de naissance : </label> <input type="date" class="infoInput" name="birthdate">
+                    </p>
+                    <p> 
+                        <span class="fw-bold infoText"> Téléphone : </span> <span class="infoText"><a href="phoneto:<?=$appointmentinfos->phone?>"><?=$appointmentinfos->phone?></a> </span>
+                    </p>
+                    <p> 
+                        <span class="fw-bold infoText"> Email : </span> <span class="infoText"> <a href="mailto:<?= $appointmentinfos->mail ?>"><?=$appointmentinfos->mail?></a> </span>
+                    </p>
+                </form>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    modifAppointment.addEventListener('click', changeEveryThing)
+    function changeEveryThing(){
+        this.style = "display: none"
+        confirmAppointmentDiv.classList.add("d-flex")
+        let infoText = document.querySelectorAll(".infoText")
+        for (let i = 0; i < infoText.length; i++) {
+            infoText[i].style = "display: none"
+        }
+        let infoInput = document.querySelectorAll(".infoInput")
+        for (let i = 0; i < infoInput.length; i++) {
+            infoInput[i].style = "display: inline-block"
+        }
+    }
+</script>
+
+
+<?php include 'parts/footer.php' ?>

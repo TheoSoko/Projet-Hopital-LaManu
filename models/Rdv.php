@@ -37,6 +37,30 @@ public function checkIfAppointmentExists():bool{
     return $number->number ; 
 }
 
+public function getAppointmentsList():array{
+    $query = 'SELECT DATE_FORMAT(`dateHour`, \'%d/%m/%Y %Hh%i\') AS `dateHourView`, `dateHour`' .
+            'FROM `appointments` ORDER BY `dateHour` ASC';
+    $queryStatement = $this->db->query($query);
+    $queryStatement->execute();
+    return $queryStatement->fetchAll(PDO::FETCH_OBJ);
+}
+
+public function getAppointment(){
+    $query = 'SELECT DATE_FORMAT(`dateHour`, \'%d/%m/%Y %Hh%i\') AS `dateHourView`, `dateHour`, CONCAT(`firstname`, \' \', `lastname`) AS `name`'.
+    ', DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `phone`, `mail`'.
+    'FROM `appointments`' .
+    'JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`'.
+    'WHERE `dateHour` = :dateHour';
+    $queryStatement = $this->db->prepare($query);
+    $queryStatement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
+    $queryStatement->execute();
+    return $queryStatement->fetch(PDO::FETCH_OBJ);
+}
+
+/* SELECT `dateHour`, `firstname`, `lastname`, `birthdate` FROM 
+`appointments`
+JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`
+ORDER BY `dateHour` ASC; */
 
 
 public function setIdPatients($value){
