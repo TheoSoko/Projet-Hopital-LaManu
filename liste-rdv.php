@@ -21,7 +21,7 @@ include 'controllers/liste-rdvCtrl.php';
                     <tr>
                         <td class="text-center">Le <?=$appointment->dateHourView['0']?></td>
                         <td class="text-center"><?=$appointment->dateHourView['1']?></td>
-                        <td class="text-center"><a href="rdvInfos.php?dateHour=<?=$appointment->dateHour?>" class="text-decoration-none fw-bold btn btn-myColor px-4"> Voir le rdv </a></td>
+                        <td class="text-center"><a href="rdvInfos.php?id=<?=$appointment->id?>" class="text-decoration-none fw-bold btn btn-myColor px-4"> Voir le rdv </a></td>
                     </tr>
                 <?php } ?>
             </tbody>

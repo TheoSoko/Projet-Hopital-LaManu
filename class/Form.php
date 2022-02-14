@@ -10,9 +10,11 @@ class Form
     private string $inputName;
     private $inputValue;
     private string $inputNameError;
+    private string $regexSearchName = '/^[A-Za-zÀ-ÖØ][A-Za-zÀ-ÖØ-öø-ÿ\-\' ]*$/';
     private string $regexName = '/^[A-ZÀ-ÖØ][A-Za-zÀ-ÖØ-öø-ÿ\-\' ]*$/';
     private string $regexPhone =  '/^0[1-79]([\.\-\s]?([0-9]{2})){4}$/';
     private string $regexDate = '/^(19[0-9]{2})|(20([0-1][0-9])|(2[0-2]))-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3[0-1]))$/';
+    private string $regexDatetime = '/^(202[2-9])-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3[0-1]))T(([01][0-9])|(2[0-3])):((00)|(15)|(30)|(45))$/';
     private string $errorMessage;
 
     public function __construct()
@@ -51,14 +53,26 @@ class Form
                 $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' valide.';
                 break;
             case 'date':
-                $check =  preg_match($this->regexDate, $this->inputValue);
+                $check = preg_match($this->regexDate, $this->inputValue);
                 $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' respectant ce format : jj/mm/aaaa.';
                 if ($check) {
                     $check = $this->checkDate();
                 }
                 break;
+            case 'datetime':
+                $check = preg_match($this->regexDatetime, $this->inputValue);
+                $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' respectant ce format : jj/mm/aaaa hh:mm.';
+                if ($check) {
+                    $check = $this->checkDatetime();
+                }
+                break;
+            case 'nameSearch':
+                $check = preg_match($this->regexSearchName, $this->inputValue);
+                $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' ne contenant que des lettres et des séparateurs (espace, tiret).';
+                break;
             default:
                 $check = false;
+                $this->errorMessage = 'L\'argument rentré dans checkFormat est invalide et ne correspond à aucun cas prévu.';
                 break;
         }
         return $check;
@@ -76,6 +90,21 @@ class Form
         return checkdate($dateArray[1], $dateArray[2], $dateArray[0]);
         
     }
+
+    /**
+     * Méthode permettant de vérifier qu'une date existe
+     *
+     * @return boolean
+     */
+    private function checkDatetime(): bool
+    {
+        //2022-02-10T09:25
+        $datetimeArray = explode('T', $this->inputValue);
+        $dateArray = explode('-', $datetimeArray[0]);
+        $timeArray = explode(':', $datetimeArray[1]);
+        return mktime($timeArray[0], $timeArray[1], null, $dateArray[1], $dateArray[2], $dateArray[0]);
+    }
+
     /**
      * Méthode globale de vérification d'un champ. 
      *
@@ -85,11 +114,11 @@ class Form
      * @param array $form
      * @return boolean
      */
-    public function check(array $input): bool
+    public function check(array $input, array $form): bool
     {
         $this->inputName = $input['filter'];
         $this->inputNameError = $input['realName'];
-        $this->inputValue = $_POST[$input['name']];
+        $this->inputValue = $form[$input['name']];
         $check = false;
         $check = $this->isNotEmpty() && $this->checkFormat($this->inputName);
         // if($this->isNotEmpty()){
@@ -102,6 +131,17 @@ class Form
         //     $check = false;
         // }
         return $check;
+    }
+
+
+    public function checkPost(array $input): bool
+    {
+        return $this->check($input, $_POST);
+    }
+
+    public function checkGet(array $input): bool
+    {
+        return $this->check($input, $_GET);
     }
 
 

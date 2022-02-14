@@ -10,6 +10,9 @@ require 'controllers/ajout-patientCtrl.php';
     </div>
 </div>
 
+<!-- Message à la suite de la requête-->
+<div class="text-center"> <p class="successMessage fw-bold fs-4 text-success"><?= !empty($successMessage) ? $successMessage : '' ?></p> </div>
+
 <form action="" method="POST" class="mt-3" id="patientUpdateForm">
     <span class="d-flex justify-content-start me-4 mb-3"><input type="submit" value="Valider les modifications" class="btn btn-myColor py-4 px-4 ms-5 fw-bold fs-5 w-auto" name="updatePatient"></span>
     
@@ -19,7 +22,7 @@ require 'controllers/ajout-patientCtrl.php';
                 <input type="text" name="lastname" id="lastname" value="<?= $_GET['lastname'] ?>" class="mb-3">
             </div>
             <?php if (!empty($errorList['lastname'])){?>
-                <p class="pt-2 errorMessage"><?= $errorList['lastname'] ?></p> 
+                <p class="pt-2 errorMessage fw-bold"><?= $errorList['lastname'] ?></p> 
             <?php } ?> 
 
             <div class="patientInfos mx-3">
@@ -27,7 +30,7 @@ require 'controllers/ajout-patientCtrl.php';
                 <input type="text" name="firstname" id="firstname" value="<?= $_GET['firstname'] ?>" class="mb-3">
             </div>
             <?php if (!empty($errorList['firstname'])){?>
-                <p class="pt-2 errorMessage"><?= $errorList['firstname'] ?></p> 
+                <p class="pt-2 errorMessage fw-bold"><?= $errorList['firstname'] ?></p> 
             <?php } ?> 
     </div>
 
@@ -37,7 +40,7 @@ require 'controllers/ajout-patientCtrl.php';
                 <input type="date" name="birthdate" value="<?= str_replace(' ', '', $_GET['birthdate'])?>" class= "mb-3"/>
             </div>
             <?php if (!empty($errorList['birthdate'])) {?>
-                <p class="pt-2 errorMessage"><?= $errorList['birthdate'] ?></p>
+                <p class="pt-2 errorMessage fw-bold"><?= $errorList['birthdate'] ?></p>
             <?php } ?> 
 
             <div class="patientInfos mx-3">
@@ -45,7 +48,7 @@ require 'controllers/ajout-patientCtrl.php';
                 <input type="tel" name="phone" id="phone" value="<?= $_GET['phone'] ?>" class="mb-3">
             </div>
             <?php if (!empty($errorList['phone'])) {?>
-                <p class="pt-2 errorMessage"><?= $errorList['phone'] ?></p>
+                <p class="pt-2 errorMessage fw-bold"><?= $errorList['phone'] ?></p>
             <?php } ?> 
 
             <div class="patientInfos mx-3">
@@ -53,7 +56,7 @@ require 'controllers/ajout-patientCtrl.php';
                 <input type="email" name="mail" id="mail" value="<?= $_GET['mail'] ?>" class="mb-3">
             </div>
             <?php if (!empty($errorList['mail'])) {?>
-                <p class="pt-2 errorMessage"><?= $errorList['mail'] ?></p>
+                <p class="pt-2 errorMessage fw-bold"><?= $errorList['mail'] ?></p>
             <?php } ?> 
 
             <!-- Input hidden pour passer l'id-->
@@ -61,7 +64,6 @@ require 'controllers/ajout-patientCtrl.php';
     </div> 
 </form>
 
-<p class="successMessage"><?= !empty($successMessage) ? $successMessage : '' ?></p>
 
 
 <script src="assets/hospital.js"></script>

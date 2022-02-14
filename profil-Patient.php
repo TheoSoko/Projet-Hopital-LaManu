@@ -33,7 +33,7 @@ include 'controllers/profil-patientCtrl.php';
             </div>
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Téléphone</p>
-                <p><?= $patient->getPhone() ?></p>
+                <p><?= preg_replace('/([0-9]{2})/', '$1 ', $patient->getPhone()) ?></p>
             </div>
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">email</p>

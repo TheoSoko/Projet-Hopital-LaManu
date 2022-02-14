@@ -21,7 +21,7 @@ if (isset($_POST['addPatient']) || isset($_POST['updatePatient'])) {
 
     $valueArray = [];
     foreach ($inputArray  as $input) {
-        if ($formVerif->check($input)) {
+        if ($formVerif->checkPost($input)) {
             $valueArray[$input['name']] = $_POST[$input['name']];
         } else {
             $errorList[$input['name']] = $formVerif->getErrorMessage();
@@ -55,7 +55,9 @@ if (isset($_POST['addPatient']) || isset($_POST['updatePatient'])) {
         //Si on veut modifier un patient:
         } else if (isset($_POST['updatePatient'])){
                 $patient->setId((int)$_POST['id']);
-                $patient->patientUpdate() ? $successMessage =  'Le patient a bien été mis à jour' : '' ;
+                if ($patient->patientUpdate()){
+                    $successMessage =  'Le patient a bien été mis à jour';
+                }
         }
     }
 }

@@ -11,7 +11,7 @@ require 'controllers/liste-patientsCtrl.php';
 
 <div class="text-end"><a href="ajout-patient.php" class="me-4 buttonAddPatient btn-myColor py-3 px-3 fw-bold">Ajouter un patient</a></div>
 <div class="container">
-    <table class="table table-stripped px-3 mt-4">
+    <table class="table table-bordered table-stripped px-3 mt-4">
         <thead>
             <th class="text-center">Nom</th>
             <th class="text-center">Prénom</th>

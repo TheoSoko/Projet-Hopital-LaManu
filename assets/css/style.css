@@ -131,10 +131,10 @@ table{
 .infoInput{
     display: none;
 }
-#confirmAppointmentDiv{
+#confirmAppointmentBtn{
     display: none;
 }
-#ReturnBtnDiv{
+#returnBtn{
     display: none;
     margin-left: 6rem ;
 }

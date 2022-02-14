@@ -1,7 +1,7 @@
 <?php 
 include 'parts/header.php';
 //require 'controllers/liste-patientsCtrl.php';
-require 'controllers/rdvCtrl.php'
+require 'controllers/ajout-rdvCtrl.php'
 ?>
 
 <!-- Premier formulaire: s'affiche tant que le patient n'est pas sélectionné -->
@@ -15,6 +15,13 @@ require 'controllers/rdvCtrl.php'
         <input type="submit" value="chercher patient" id="rdvSubmit" class="btn btn-myColor py-1 shadow" name="patientSearch">
     </form>
 <?php } ?>
+
+<!-- Messages d'erreurs -->
+<?php if (isset($errorList) && !isset($_POST['setAppointment'])){ ?>
+        <?php foreach($errorList as $error ){?>
+    <p class="fw-bold fs-5 ps-3 mt-5 text-danger"> <?= $error ?> </p>
+<?php }} ?>  
+
 
 <!-- Deuxième formulaire: s'affiche si la recherche a été effectuée -->
 <?php if (isset($_GET['patientSearch']) && isset($SearchedPatientList) && !isset($_POST['patientSelect']) && !isset($_POST['setAppointment'])){  ?>
@@ -36,24 +43,27 @@ require 'controllers/rdvCtrl.php'
                 </form>
             <?php } ?>
         </div>
-<?php }else if (isset($errorMessage)){?>
-        <p><?= $errorMessage ?></p>
 <?php } ?>
 
 <!-- Troisème formulaire: s'affiche si le patient a été sélectionné -->
 
-<?php if (isset($_POST['patientSelect']) || !empty($wrongDatehour)){ ?>
+<?php if (isset($_POST['patientSelect']) || !empty($errorList)){ ?>
         <form action="" method="POST" class="text-center">
             <label for="dateTimeAppointment" class="h3 mb-5">Veuillez entrer une une date et une heure pour le rdv : </label>
-            <input type="datetime-local" name="dateTimeAppointment" required>
+            <input type="datetime-local" name="datehour" required>
             <input type="hidden" value="<?=$_POST['idInput']?>" name="idInput">
             <input type="hidden" value="<?=$_POST['lastNameInput']?>" name="lastNameInput">
             <input type="hidden" value="<?=$_POST['firstNameInput']?>" name="firstNameInput">
             <input type="hidden" value="<?=$_POST['birthdateInput']?>" name="birthdateInput">
             <div class="mt-2">
-                <p class="fw-bold text-danger mt-3"> <?= !empty($wrongDatehour) ? $resultMessage : ''?> </p> <!--Résultat si le créneau est déjà pris -->  
-                <input type="submit" value="Confirmer le rdv" class="btn btn-myColor py-1 shadow" name="setAppointment">
-            </div>
+            <?php if (!empty($errorList)) {?>
+                <div>
+                    <?php foreach($errorList as $error){?>
+                        <p class="fw-bold text-danger mt-3"> <?= $error ?></p> <!--Résultat si le créneau est déjà pris -->  
+                    <?php }?>
+                </div>
+            <?php } ?>
+            <input type="submit" value="Confirmer le rdv" class="btn btn-myColor py-1 shadow" name="setAppointment">
         </form>
     <div class="d-flex justify-content-center mt-4">
         <div class="card cardPatientLone pt-1 pb-2 shadow-sm">
@@ -67,9 +77,11 @@ require 'controllers/rdvCtrl.php'
 <?php } ?>
 
 <!--résultat -->
-<?php if (isset($_POST['setAppointment']) && empty($wrongDatehour)){ ?>
+<?php if (isset($_POST['setAppointment'])){ ?>
     <div class="text-center">
-        <p class="fw-bold fs-3 mt-5 text-myColor"><?= $resultMessage ?></p>
+        <?php if (isset($successMessage)) {?>
+            <p class="fw-bold fs-4 mt-5 pt-3 text-success"><?= $successMessage ?></p>
+        <?php } ?>
     </div>
 <?php } ?>
 

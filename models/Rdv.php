@@ -4,7 +4,7 @@ class Rdv
 
 private string $table = '`appointments`';
 private PDO $db;
-private string $dateHour;
+public string $dateHour;
 private int $idPatients;
 private int $id;
 
@@ -19,8 +19,8 @@ public function __construct()
 }
 
 
-public function addAppointments(): bool {
-    $query = 'INSERT INTO ' . $this->table . '(`dateHour`, `idPatients`) VALUES (:dateHour, :idPatients) ';
+public function addAppointment(): bool {
+    $query = 'INSERT INTO ' . $this->table . '(`dateHour`, `idPatients`) VALUES (:dateHour, :idPatients)';
     $queryStatement = $this->db->prepare($query);
     $queryStatement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
     $queryStatement->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT);
@@ -39,21 +39,21 @@ public function checkIfAppointmentExists():bool{
 }
 
 public function getAppointmentsList():array{
-    $query = 'SELECT DATE_FORMAT(`dateHour`, \'%d/%m/%Y %Hh%i\') AS `dateHourView`, `dateHour`' .
-            'FROM `appointments` ORDER BY `dateHour` ASC';
+    $query = 'SELECT DATE_FORMAT(`dateHour`, \'%d/%m/%Y %Hh%i\') AS `dateHourView`, `dateHour`, `id`' 
+            . 'FROM `appointments` ORDER BY `dateHour` ASC';
     $queryStatement = $this->db->query($query);
     $queryStatement->execute();
     return $queryStatement->fetchAll(PDO::FETCH_OBJ);
 }
 
 public function getAppointment():object{
-    $query = 'SELECT DATE_FORMAT(`dateHour`, \'%d/%m/%Y %Hh%i\') AS `dateHourView`, `dateHour`, CONCAT(`firstname`, \' \', `lastname`) AS `name`'.
-    ', `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `birthdate`, `phone`, `mail`'.
-    'FROM' . $this->table .
-    'JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`'.
-    'WHERE `dateHour` = :dateHour';
+    $query = 'SELECT DATE_FORMAT(`dateHour`, \'%d/%m/%Y %Hh%i\') AS `dateHourView`, `dateHour`, CONCAT(`firstname`, \' \', `lastname`) AS `name`'
+    . ', `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `birthdate`, `phone`, `mail`, ' . $this->table . '.`id` AS `id`' 
+    . 'FROM' . $this->table 
+    . 'JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`'
+    . 'WHERE'  . $this->table . '.`id` = :id';
     $queryStatement = $this->db->prepare($query);
-    $queryStatement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
+    $queryStatement->bindValue(':id', $this->id, PDO::PARAM_STR);
     $queryStatement->execute();
     return $queryStatement->fetch(PDO::FETCH_OBJ);
 }
@@ -63,24 +63,26 @@ public function getAppointment():object{
 JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`
 ORDER BY `dateHour` ASC; */
 
+//UPDATE `appointments` SET `dateHour` = '2022-01-29 11:50' WHERE `id` = '41';
 public function appointmentUpdate():bool{
-    $query = 'UPDATE' . $this->table . 'SET `dateHour` = :dateHour, `idPatients` = :idPatient'. 
-    'WHERE `id` = :id';
+    $query = 'UPDATE' . $this->table . 'SET `dateHour` = :dateHour WHERE `id` = :id';
     $queryStatement = $this->db->prepare($query);
     $queryStatement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
-    $queryStatement->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT);
     $queryStatement->bindValue(':id', $this->id, PDO::PARAM_STR);
     return $queryStatement->execute();
 }
 
 
-
-public function setIdPatients($value){
+public function setId(int $value){
+    $this->id = $value;
+}
+public function setIdPatients(int $value){
     $this->idPatients = $value;
 }
-public function setDateHour($value){
+public function setDateHour(string $value){
     $this->dateHour = $value;
 }
+
 
 }
 

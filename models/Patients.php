@@ -73,8 +73,8 @@ class Patients
 
     //Modifie les information d'un patient.
     public function patientUpdate(): bool{
-        $query = 'UPDATE ' . $this->table . ' SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone
-                                            , `mail` = :mail  WHERE `id` = :id';
+        $query = 'UPDATE ' . $this->table . ' SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone'
+                                            . ', `mail` = :mail  WHERE `id` = :id';
         $queryStatement = $this->db->prepare($query);
         $queryStatement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
         $queryStatement->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
@@ -108,6 +108,7 @@ class Patients
         return false;
     }
 
+    //Récupère une liste de patients en fonction de la recherche
     public function getSearchedPatients(){
         $query = 'SELECT `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `id` FROM ' . $this->table . 
                         ' WHERE `lastname` LIKE :lastname';
@@ -122,9 +123,21 @@ class Patients
         } 
     }
 
+    //Récupère l'id d'un patient d'après ses informations personnelles
+    public function getPatientId()
+    {
+        $query = 'SELECT `id` FROM ' . $this->table
+            . ' WHERE `lastname` = :lastname AND `firstname` = :firstname AND `birthdate` = :birthdate';
+        $queryStatement = $this->db->prepare($query);
+        $queryStatement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+        $queryStatement->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
+        $queryStatement->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
+        $queryStatement->execute();
+        $idPatient = $queryStatement->fetch(PDO::FETCH_OBJ);
+        return $idPatient;
+    }
 
-
-
+//SELECT `id` FROM $this->table WHERE `lastname` = :lastname AND `firstname` = :firstname AND `birthdate` = :birthdate
 
 
     //SETTERS
