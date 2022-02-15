@@ -3,11 +3,16 @@ if (!isset($_POST['field'])){
     require 'models/Rdv.php';
 } else if (isset($_POST['field'])){
     require '../models/Rdv.php';
-    $listeId = $_POST['value'];
+    $idChain = $_POST['value'];
     $rdv = new Rdv;
-    $rdv->setId(intval($listeId));
-    echo $listeId;
+    $idList = explode(',', $idChain);
+    foreach ($idList as $id){
+        $rdv->setId($id);
+        $check = $rdv->deleteAppointment();
+    }
+    echo $check;
 }
+
 
 $rdv = new Rdv;
 $appointmentsList = $rdv->getAppointmentsList();

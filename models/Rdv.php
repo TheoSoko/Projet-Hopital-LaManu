@@ -81,11 +81,11 @@ public function getAppointmentListByPatient():array{
     return $queryStatement->fetchAll(PDO::FETCH_OBJ);
 }
 
-public function deleteAppointment(){
+public function deleteAppointment():bool{
     $query = 'DELETE FROM ' . $this->table . ' WHERE `id` = :id';
     $queryStatement = $this->db->prepare($query);
     $queryStatement->bindValue(':id', $this->id, PDO::PARAM_STR);
-    $queryStatement->execute();
+    return $queryStatement->execute();
 }
 
 

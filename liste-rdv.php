@@ -26,11 +26,11 @@ include 'controllers/liste-rdvCtrl.php';
             </thead>
             <tbody>
                 <?php foreach ($appointmentsList as $appointment){ ?>
-                    <tr>
+                    <tr id="<?= $appointment->id?>">
                         <td class="text-center">Le <?=$appointment->dateHourView['0']?></td>
                         <td class="text-center"><?=$appointment->dateHourView['1']?></td>
                         <td class="text-center"><a href="rdvInfos.php?id=<?=$appointment->id?>" class="text-decoration-none fw-bold btn btn-myColor px-4"> Voir le rdv </a></td>
-                        <td class="text-center px-1 deleteSelect d-none "><button class="deleteSelectButton btn-danger fw-bold px-3 rounded" data-id="<?=$appointment->id?>">X</button></td>
+                        <td class="text-center px-1 deleteSelect d-none "><button class="deleteSelectButton fw-bold px-3 rounded" data-id="<?=$appointment->id?>">X</button></td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -51,17 +51,34 @@ include 'controllers/liste-rdvCtrl.php';
     }
 
     let idList = []
+    let tableRowList = []
 
-    //Au clic sur les petits boutons avec une croix
+    //AU CLIC SUR LES PETITS BOUTONS AVEC UN CROIX
     document.addEventListener("click", event => {
         if(event.target.matches(".deleteSelectButton")){ 
-            idList.push(event.target.dataset.id)
-            event.target.classList.add("active") 
+            //Ajout et retrait des valeurs du tableau
+            let dataId = event.target.dataset.id
+            if (!idList.includes(dataId)){
+                idList.push(dataId)
+            } else {
+                let index = idList.indexOf(dataId)
+                idList.splice(index, 1)
+            }
+            // Activation et désactivation des boutons dans l'affichage
+            if (!event.target.classList.contains("deleteSelectButton-clicked")){ 
+                event.target.classList.add("deleteSelectButton-clicked")
+            } else {
+                event.target.classList.remove("deleteSelectButton-clicked") 
+            }
+            // Ajout de la ligne du tableau html à un array
+            let tableRow = document.getElementById(dataId)
+            tableRowList.push(tableRow)
+            //Vérification du tableau idList
             console.log(idList)
         }
     })
 
-    //Au clic sur Supprimer la sélection"
+    //AU CLIC SUR "SUPPRIMER LA SELECTION"
     ConfirmDeleteBtn.addEventListener("click", sendIdList)
     function sendIdList(){
         //L'affichage revient à la normale
@@ -73,7 +90,6 @@ include 'controllers/liste-rdvCtrl.php';
         ConfirmDeleteBtn.classList.add("d-none")
 
         //On envoie la liste d'id
-        
         let xhr = new XMLHttpRequest()
         xhr.open("POST", "controllers/liste-rdvCtrl.php", true)
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
@@ -82,6 +98,9 @@ include 'controllers/liste-rdvCtrl.php';
             if (xhr.readyState == 4 && xhr.status == 200) {
                 if (xhr.responseText == 1) {
                     console.log("c ok")
+                    for (i = 0; i > tableRowList.lenght; i++){
+                        document.getElementById(tableRowList[i]).classList.add("d-none")
+                    }
                 } else {
                     console.log("c caca")
                 }
