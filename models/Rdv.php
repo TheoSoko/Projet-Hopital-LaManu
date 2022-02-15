@@ -63,13 +63,29 @@ public function getAppointment():object{
 JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`
 ORDER BY `dateHour` ASC; */
 
-//UPDATE `appointments` SET `dateHour` = '2022-01-29 11:50' WHERE `id` = '41';
 public function appointmentUpdate():bool{
     $query = 'UPDATE' . $this->table . 'SET `dateHour` = :dateHour WHERE `id` = :id';
     $queryStatement = $this->db->prepare($query);
     $queryStatement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
     $queryStatement->bindValue(':id', $this->id, PDO::PARAM_STR);
     return $queryStatement->execute();
+}
+
+public function getAppointmentListByPatient():array{
+    $query = 'SELECT DATE_FORMAT(`dateHour`, \'%d/%m/%Y %Hh%i\') AS `dateHourView`'
+            . 'FROM ' . $this->table 
+            . 'WHERE idPatients = :idPatient';
+    $queryStatement = $this->db->prepare($query);
+    $queryStatement->bindValue(':idPatient', $this->idPatients, PDO::PARAM_STR);
+    $queryStatement->execute();
+    return $queryStatement->fetchAll(PDO::FETCH_OBJ);
+}
+
+public function deleteAppointment(){
+    $query = 'DELETE FROM ' . $this->table . ' WHERE `id` = :id';
+    $queryStatement = $this->db->prepare($query);
+    $queryStatement->bindValue(':id', $this->id, PDO::PARAM_STR);
+    $queryStatement->execute();
 }
 
 
@@ -83,7 +99,9 @@ public function setDateHour(string $value){
     $this->dateHour = $value;
 }
 
-
+public function getId(){
+    return $this->id;
+}
 }
 
 ?>

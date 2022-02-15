@@ -3,7 +3,7 @@ include 'parts/header.php';
 include 'controllers/profil-patientCtrl.php';
 ?>
 
-<?php if ($isPatientFound) { ?>
+<?php if ($patientInfos) { ?>
     <div class="row text-center mainTitle mb-4">
         <div class="col">
             <H1 class="display-5">Profil du patient</H1>
@@ -26,7 +26,7 @@ include 'controllers/profil-patientCtrl.php';
             </div>
     </div>
 
-    <div class="row text-center d-flex justify-content-center">
+    <div class="row text-center d-flex justify-content-center mb-5">
             <div class="patientInfos mx-3">
                 <p class="fw-bold mb-2">Date de naissance</p>
                 <p><?= $patient->getBirthdateView() ?></p>
@@ -40,6 +40,31 @@ include 'controllers/profil-patientCtrl.php';
                 <p><?= $patient->getMail() ?></p>
             </div>
     </div>
+
+    <?php if (!empty($patientAppointmentList)){ ?>
+        <div class="text-center pt-4 mb-4"><h2>Rendez-vous du patient</h2></div>
+        <?php foreach ($patientAppointmentList as $appointment){ ?>
+            <div class="d-flex justify-content-center">
+                <div class="card shadow mt-3 cardInfosRdvPatient">
+                    <div class="card-header"> <h1 class="card-title h4 pt-2 infoText"> Rendez-vous </h1> </div>
+                    <div class="card-body ps-4 pt-3"> 
+                        <p> <span class="fw-bold"> Date : </span> <?= $appointment->dateHourView['0'] ?> </p>
+                        <p> <span class="fw-bold"> Heure : </span><?= $appointment->dateHourView['1'] ?> </p>
+                    </div>
+                </div>
+            </div>
+        <?php }} ?>
+
+
+
+
+
+
+
+
+
+
+
 
 <?php } else { ?>
     <div class="row text-center mainTitle mb-5">

@@ -126,7 +126,10 @@ table{
 
 /* Page infos RDV */
 .cardInfosRdv{
-    font-size: 1.1em
+    font-size: 1.1em;
+}
+.cardInfosRdvPatient{
+    font-size: 1.1em;
 }
 .infoInput{
     display: none;
@@ -142,6 +145,28 @@ table{
     border: none;
 }
 /*     '____'      */
+
+
+/* Page liste rdv */
+
+.deleteSelectButton{
+    background-color: rgb(109, 50, 33);
+}
+.buttonDeleteAppointment{
+    background-color: rgb(109, 50, 33);
+    color: white;
+    border-radius: 5px;
+}
+.buttonConfirmDelete{
+    background-color: rgb(109, 50, 33);
+    color: white;
+    border-radius: 5px;
+}
+.buttonConfirmDelete:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+/*     '____'      */
+
 
 footer{
     background-color:teal ;
@@ -163,6 +188,9 @@ footer p{
 
     .cardInfosRdv{
         width: 40%;
+    }
+    .cardInfosRdvPatient{
+        width: 30%;
     }
     .cardPatientLone{
         width: 22rem;
