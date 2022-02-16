@@ -49,8 +49,8 @@ require 'controllers/ajout-rdvCtrl.php'
 
 <?php if (isset($_POST['patientSelect']) || !empty($errorList)){ ?>
         <form action="" method="POST" class="text-center">
-            <label for="dateTimeAppointment" class="h3 mb-5">Veuillez entrer une une date et une heure pour le rdv : </label>
-            <input type="datetime-local" name="datehour" required>
+            <label for="dateTimeAppointment"><span class="h3 mb-5">Veuillez entrer une une date et une heure pour le rdv : </span> <br> <small class="<?= isset($classErrorMessage) ? $classErrorMessage : ""?>">(Les valeurs de minute ne peuvent être que 00, 15, 30, 45)</small> </label>
+            <input type="datetime-local" name="datehour" step="900" required>
             <input type="hidden" value="<?=$_POST['idInput']?>" name="idInput">
             <input type="hidden" value="<?=$_POST['lastNameInput']?>" name="lastNameInput">
             <input type="hidden" value="<?=$_POST['firstNameInput']?>" name="firstNameInput">

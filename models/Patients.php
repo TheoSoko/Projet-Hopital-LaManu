@@ -10,7 +10,8 @@ class Patients
     private string $mail;
     private PDO $db;
     private string $table = '`patients`';
-    private string $lastnameSearch;
+    private string $nameSearch;
+    private array $idList;
 
     public function __construct()
     {
@@ -63,7 +64,9 @@ class Patients
 
     //Récupère tous les patients existant dans la base de donnée.
     public function patientsList(): array{
-        $query = 'SELECT `id`, `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `birthdate` AS `birthdate` FROM ' . $this->table;
+        $query = 'SELECT `id`, `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `birthdate` AS `birthdate`'
+        . 'FROM ' . $this->table
+        . 'ORDER BY `id` DESC';
         $queryStatement = $this->db->query($query);
         $patientsList = $queryStatement->fetchAll(PDO::FETCH_OBJ);
         return $patientsList;
@@ -111,16 +114,13 @@ class Patients
     //Récupère une liste de patients en fonction de la recherche
     public function getSearchedPatients(){
         $query = 'SELECT `lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdateView`, `id` FROM ' . $this->table . 
-                        ' WHERE `lastname` LIKE :lastname';
+                        ' WHERE `lastname` LIKE :lastname OR `firstname` LIKE :firstname';
         $queryStatement = $this->db->prepare($query);
-        $queryStatement->bindValue(':lastname', '%'.$this->lastnameSearch.'%', PDO::PARAM_STR);
+        $queryStatement->bindValue(':lastname', '%'.$this->nameSearch.'%', PDO::PARAM_STR);
+        $queryStatement->bindValue(':firstname', '%'.$this->nameSearch.'%', PDO::PARAM_STR);
         $queryStatement->execute();
         $SearchedPatientList = $queryStatement->fetchAll(PDO::FETCH_OBJ);
-        if (!empty($SearchedPatientList)){
-            return $SearchedPatientList; 
-        } else {
-            return false;
-        } 
+        return $SearchedPatientList; 
     }
 
     //Récupère l'id d'un patient d'après ses informations personnelles
@@ -136,6 +136,29 @@ class Patients
         $idPatient = $queryStatement->fetch(PDO::FETCH_OBJ);
         return $idPatient;
     }
+
+
+    // Récupère une liste d'id, crée un nombre variable de strings pour la requête,
+    // et appelle la fonction qui va exécuter la requête.
+    public function deletePatientQuery():bool{
+        foreach ($this->idList as $id){
+            $queryPart[] = 'WHERE `id` = :id';
+            $queryPartString = implode(' AND ', $queryPart);
+            return $this->deletePatient($queryPartString);
+        }
+    }
+    //Supprime un ou plusieurs patients.
+    public function deletePatient($where):bool{
+        $query = 'DELETE FROM ' . $this->table 
+                . $where;
+        $queryStatement = $this->db->prepare($query);
+        foreach ($this->idList as $id){
+        $queryStatement->bindValue(':id', $id, PDO::PARAM_INT);
+        }
+        return $queryStatement->execute();
+    }
+
+
 
 //SELECT `id` FROM $this->table WHERE `lastname` = :lastname AND `firstname` = :firstname AND `birthdate` = :birthdate
 
@@ -170,10 +193,12 @@ class Patients
     public function setId(int $value): void{
         $this->id = $value;
     }
-    public function setLastnameSearch($value): void{
-        $this->lastnameSearch = $value;
+    public function setNameSearch($value): void{
+        $this->nameSearch = $value;
     }
-
+    public function setIdList(array $value): void{
+        $this->idList = $value;
+    }
 
 
     //GETTERS

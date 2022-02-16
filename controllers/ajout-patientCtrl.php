@@ -25,6 +25,7 @@ if (isset($_POST['addPatient']) || isset($_POST['updatePatient'])) {
             $valueArray[$input['name']] = $_POST[$input['name']];
         } else {
             $errorList[$input['name']] = $formVerif->getErrorMessage();
+            //$erreur = "ça marche pas";
         }
     }
 

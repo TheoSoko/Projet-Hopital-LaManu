@@ -4,7 +4,7 @@ include 'parts/header.php';
 ?> 
 
 
-<?php if (!isset($_POST['addPatient']) || !empty($errorList['addPatient'])) { ?>
+<?php if (!isset($_POST['addPatient']) || !empty($errorList)) { ?>
     <div class="container">
         <div class="row text-center mainTitle">
             <div class="col">
@@ -39,7 +39,7 @@ include 'parts/header.php';
 <?php } ?>
 
 
-<?php if (isset($_POST['addPatient']) && empty($errorList['addPatient'])) { ?>
+<?php if (isset($_POST['addPatient']) && empty($errorList)) { ?>
         <div class="text-center">
             <p class="text-myColor fw-bold fs-3 mt-5">Le patient a bien été ajouté.</p>
         </div>

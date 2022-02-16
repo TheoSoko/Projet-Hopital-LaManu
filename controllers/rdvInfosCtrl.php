@@ -14,7 +14,7 @@ if (isset($_POST['confirmAppointment'])){
 
     //Utilisation de la classe Form pour les vérifications
     require 'class/Form.php';
-    $formValid = new form;
+    $formValid = new Form;
     $errorList = [];
     $input = ['filter' => 'datetime', 'name' => 'dateHour', 'realName' => 'une date et une heure'];
 

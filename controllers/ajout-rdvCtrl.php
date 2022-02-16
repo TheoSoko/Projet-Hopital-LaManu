@@ -31,6 +31,7 @@ if (isset($_POST['setAppointment'])){
     $errorList = [];
     $input = ['filter' => 'datetime', 'name' => 'datehour', 'realName' => 'une date et une heure'];
     $formValid = new Form;
+    //On vérifie la valeur avec la classe Form.
     if ($formValid->checkPost($input)) {
         $datehour = str_replace('T', ' ', htmlspecialchars($_POST['datehour']));
         $appointments = new Rdv;
@@ -38,15 +39,18 @@ if (isset($_POST['setAppointment'])){
         $checkAppointmentifExists = $appointments->checkIfAppointmentExists();
     } else {
         $errorList['datehour'] = $formValid->getErrorMessage();
+        $classErrorMessage = 'text-danger fw-bold';
     }
 
+    //On vérifie que le créneau du rdv n'est pas déjà pris
 
-    if (count($errorList) == 0 && !$checkAppointmentifExists) {
+    //Si tout est Ok, on ajoute de rdv
+    if (count($errorList) == 0 && !$checkAppointmentifExists ) {
         $appointments->setIdPatients(htmlspecialchars($_POST['idInput']));
         $appointments->addAppointment();
         $successMessage = "Le rendez-vous a bien été ajouté.";
     } else if ($checkAppointmentifExists) {
-        $errorList['timeSlot'] = 'Désolé, ce créneau est déjà pris pour un autre rdv.';        
+        $errorList['timeSlot'] = 'Désolé, ce créneau est déjà pris pour un autre rdv.';
     } 
 }
 

@@ -76,6 +76,7 @@ input[type=submit]{
 table{
     background-color: rgba(184, 157, 126, 0.493);
 }
+
 /* Page liste patients*/
 .patientsList{
     padding-top: 15px;
@@ -90,6 +91,14 @@ table{
     color: white;
     border-radius: 5px;
 }
+
+.buttonDeletePatient{
+    background-color: rgb(109, 50, 33);
+    color: white;
+    border-radius: 5px;
+}
+
+
 /* */
 
 /* Page infos patient */
@@ -148,7 +157,6 @@ table{
 
 
 /* Page liste rdv */
-
 
 .buttonDeleteAppointment{
     background-color: rgb(109, 50, 33);

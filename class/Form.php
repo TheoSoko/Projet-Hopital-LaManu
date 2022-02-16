@@ -15,8 +15,6 @@ class Form
     private string $regexPhone =  '/^0[1-79]([\.\-\s]?([0-9]{2})){4}$/';
     private string $regexDate = '/^(19[0-9]{2})|(20([0-1][0-9])|(2[0-2]))-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3[0-1]))$/';
     private string $regexDatetime = '/^(202[2-9])-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3[0-1]))T(([01][0-9])|(2[0-3])):((00)|(15)|(30)|(45))$/';
-    private string $errorMessage;
-
     public function __construct()
     {
     }
@@ -46,7 +44,7 @@ class Form
                 break;
             case 'phone':
                 $check = preg_match($this->regexPhone, $this->inputValue);
-                $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' ne contenant que des chiffres et des séparateurs (espace, tiret).';
+                $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' à 10 chiffres ne contenant que des chiffres et des séparateurs (espace, tiret).';
                 break;
             case 'email':
                 $check = filter_var($this->inputValue, FILTER_VALIDATE_EMAIL);
@@ -61,7 +59,7 @@ class Form
                 break;
             case 'datetime':
                 $check = preg_match($this->regexDatetime, $this->inputValue);
-                $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' respectant ce format : jj/mm/aaaa hh:mm.';
+                $this->errorMessage = 'Merci de renseigner ' . $this->inputNameError . ' respectant ce format : jj/mm/aaaa hh:mm. Aussi, les rdv ne sont disponibles que toutes les 15 minutes.';
                 if ($check) {
                     $check = $this->checkDatetime();
                 }
