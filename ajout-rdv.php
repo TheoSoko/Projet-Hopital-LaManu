@@ -9,10 +9,10 @@ require 'controllers/ajout-rdvCtrl.php'
     <form action="" method="GET" class="ms-3 mb-5">
         <p class="fs-4 mb-4"> Veuillez sélectionner le patient : </p>
         <div>
-            <label for="searchPatientLastName" class="labelForm me-3"> Nom : </label>
-            <input type="search" name="searchPatientLastName" id="searchPatientLastName">
+            <label for="searchPatientLastName" class="labelForm me-3 fw-bold"> Patient : </label>
+            <input type="search" placeholder="Jean Dupont" name="searchPatientLastName" id="searchPatientLastName">
         </div>
-        <input type="submit" value="chercher patient" id="rdvSubmit" class="btn btn-myColor py-1 shadow" name="patientSearch">
+        <input type="submit" value="Recherche" id="searchPatientForAppointment" class="btn btn-myColor shadow mt-3" name="patientSearch">
     </form>
 <?php } ?>
 

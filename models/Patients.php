@@ -136,25 +136,14 @@ class Patients
         $idPatient = $queryStatement->fetch(PDO::FETCH_OBJ);
         return $idPatient;
     }
+       
 
-
-    // Récupère une liste d'id, crée un nombre variable de strings pour la requête,
-    // et appelle la fonction qui va exécuter la requête.
-    public function deletePatientQuery():bool{
-        foreach ($this->idList as $id){
-            $queryPart[] = 'WHERE `id` = :id';
-            $queryPartString = implode(' AND ', $queryPart);
-            return $this->deletePatient($queryPartString);
-        }
-    }
     //Supprime un ou plusieurs patients.
-    public function deletePatient($where):bool{
-        $query = 'DELETE FROM ' . $this->table 
-                . $where;
+    public function deletePatient(){
+        //Récupère idList et le transorme en string.
+        $queryPart = implode(', ', $this->idList);
+        $query = 'DELETE FROM ' . $this->table . ' WHERE `id` IN ('. $queryPart .')';
         $queryStatement = $this->db->prepare($query);
-        foreach ($this->idList as $id){
-        $queryStatement->bindValue(':id', $id, PDO::PARAM_INT);
-        }
         return $queryStatement->execute();
     }
 
@@ -223,5 +212,7 @@ class Patients
     public function getMail():string{
         return $this->mail;
     }
-
+    public function getIdList(): array{
+        return $this->idList ;
+    }
 }

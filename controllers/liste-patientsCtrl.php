@@ -23,6 +23,7 @@ if (!isset($_GET['searchPatientSubmit'])){
         $patientSearch = $_GET['searchPatient'];
         $patients->setNameSearch(htmlspecialchars($patientSearch));
         $patientsList = $patients->getSearchedPatients();
+        $searchSet = true;
     } else {
         //Sinon on affiche quand même tous les rdv et on définit le message d'erreur
         $patientsList = $patients->patientsList();
@@ -31,23 +32,17 @@ if (!isset($_GET['searchPatientSubmit'])){
 }
 
 
-
-
-
-/*
+// Suppression de patients
 if (isset($_POST['idList'])){
     $idChain = $_POST['idList'];
     if (!empty($idChain)){
-        echo (1);
         $idList = explode(',', $idChain);
         $patients->setIdList($idList);
-        if ($rdv->deletePatientQuery()){
-            $check = 'super';
-        } else {
-            $check = 'naze' ;
+        if ($patients->deletePatient()){
+            echo 1;
         }
     }
 }
-*/
+
 
 
